@@ -6,4 +6,5 @@
     <string name="header">Simple WiFi control</string>
     <string name="status_caption">WiFi</string>
     <string name="button_scan_caption">Scan</string>
+    <string name="scan_started_text">Scan started</string>
 </resources>

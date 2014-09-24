@@ -1,6 +1,7 @@
 package com.example.AndroidHelloWorld;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.wifi.ScanResult;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +50,26 @@ public class WifiScanArrayAdapter extends ArrayAdapter<ScanResult> {
         }
 
         holder.txtSSID.setText(objects.get(position).SSID);
-        holder.txtLevel.setText("Level: "+objects.get(position).level);
+
+        int signalLevel = objects.get(position).level;
+        holder.txtLevel.setText("Level: "+String.valueOf(signalLevel));
+        holder.txtLevel.setTextColor(getLevelColor(signalLevel));
 
         return itemView;
+    }
+
+    private int getLevelColor(int signalLevel) {
+        if (signalLevel >= -65) {
+            return Color.GREEN;
+        } else if (signalLevel < -65 && signalLevel >= 80) {
+            return Color.YELLOW;
+        } else {
+            return Color.RED;
+        }
+    }
+
+    public void clearAll() {
+        objects.clear();
+        this.clear();
     }
 }

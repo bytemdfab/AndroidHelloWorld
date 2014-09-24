@@ -21,6 +21,7 @@ public class MyActivity extends Activity {
     private WifiManager wifiManager;
     private Switch swStatus;
     private Button btnScan;
+    private ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MyActivity extends Activity {
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         swStatus = (Switch) findViewById(R.id.swStatus);
         btnScan = (Button) findViewById(R.id.btnRescan);
+        listView = (ListView) findViewById(R.id.listView);
 
         checkWifiStatus();
 
@@ -52,30 +54,50 @@ public class MyActivity extends Activity {
             }
         });
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+
         this.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
+
+                String action = intent.getAction();
+
+                if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
                     checkWifiStatus();
 
                     if (isWifiEnabled()) {
                         scanWifi();
                     }
+                } if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
+                    List<ScanResult> scanResults = wifiManager.getScanResults();
+
+                    if (scanResults == null) {
+                        return;
+                    }
+
+                    WifiScanArrayAdapter adapter = new WifiScanArrayAdapter(getBaseContext(), scanResults);
+                    listView.setAdapter(adapter);
                 }
             }
-        }, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
+        }, intentFilter);
     }
 
     private void disableWifi() {
         if (wifiManager.setWifiEnabled(false)) {
             displayWifiStatus(false);
+            clearListView();
         }
+    }
+
+    private void clearListView() {
+        ((WifiScanArrayAdapter)listView.getAdapter()).clearAll();
     }
 
     private void enableWifi() {
         if (wifiManager.setWifiEnabled(true)) {
             displayWifiStatus(true);
-//            scanWifi();
         }
     }
 
@@ -99,19 +121,7 @@ public class MyActivity extends Activity {
 
     private void scanWifi() {
         if (wifiManager.startScan()) {
-
-            List<ScanResult> scanResults = wifiManager.getScanResults();
-
-            if (scanResults == null) {
-                return;
-            }
-
-            //ArrayAdapter<ScanResult> adapter = new ArrayAdapter<ScanResult>(getApplicationContext(), android.R.layout.simple_list_item_1, scanResults);
-
-            WifiScanArrayAdapter adapter = new WifiScanArrayAdapter(getBaseContext(), scanResults);
-
-            ListView listView = (ListView) findViewById(R.id.listView);
-            listView.setAdapter(adapter);
+            Toast.makeText(this, R.string.scan_started_text, Toast.LENGTH_SHORT).show();
         }
     }
 }
