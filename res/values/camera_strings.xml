@@ -5,4 +5,7 @@
 
     <string name="camera_hello_message">Hello!</string>
 
+    <string name="camera_btn_thumb_title">Thumbnail</string>
+    <string name="camera_btn_full_title">Full</string>
+
 </resources>

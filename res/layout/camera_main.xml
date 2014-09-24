@@ -5,4 +5,28 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/camera_btn_thumb_title"
+                android:id="@+id/btnCameraThumb"
+                android:layout_gravity="center_horizontal"
+                android:onClick="btnCameraThumb_Click" android:layout_weight="1"/>
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/camera_btn_full_title"
+                android:id="@+id/btnCameraFull" android:layout_weight="1" android:onClick="btnCameraFull_Click"/>
+    </LinearLayout>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription=""/>
 </LinearLayout>
