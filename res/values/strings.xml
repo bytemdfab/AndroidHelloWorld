@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple WiFi control</string>
+    <string name="app_name">Set of samples</string>
     <string name="header_text">Press Scan button to get list of WiFi networks</string>
     <string name="wifi_switch">WiFi</string>
     <string name="header">Simple WiFi control</string>
