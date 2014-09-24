@@ -1,11 +1,13 @@
 package com.example.AndroidHelloWorld;
 
 import com.example.AndroidHelloWorld.camera.CameraActivity;
+import com.example.AndroidHelloWorld.cameraView.CameraViewActivity;
 import com.example.AndroidHelloWorld.wifi.WifiControlActivity;
 
 public enum MainMenuItem {
     WIFI_CONTROL("WiFi Control", WifiControlActivity.class),
-    CAMERA("Camera usage", CameraActivity.class);
+    CAMERA("Camera usage", CameraActivity.class),
+    CAMERA_VIEW("Camera view", CameraViewActivity.class);
 
     private final String displayName;
 
