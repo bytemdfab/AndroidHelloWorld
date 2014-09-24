@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="wifi_activity_title">Simple WiFi control</string>
+
+    <string name="status_caption">WiFi</string>
+    <string name="button_scan_caption">Scan</string>
+    <string name="scan_started_text">Scan started</string>
+
+</resources>

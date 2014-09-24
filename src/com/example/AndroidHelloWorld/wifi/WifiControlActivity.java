@@ -1,4 +1,4 @@
-package com.example.AndroidHelloWorld;
+package com.example.AndroidHelloWorld.wifi;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -10,23 +10,47 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import com.example.AndroidHelloWorld.R;
 
 import java.util.List;
 
-public class MyActivity extends Activity {
-    /**
-     * Called when the activity is first created.
-     */
+public class WifiControlActivity extends Activity {
 
     private WifiManager wifiManager;
     private Switch swStatus;
     private Button btnScan;
     private ListView listView;
+    private final MyBroadcastReceiver broadcastReceiver = new MyBroadcastReceiver();
+
+    private class MyBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
+                checkWifiStatus();
+
+                if (isWifiEnabled()) {
+                    scanWifi();
+                }
+            } if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
+                List<ScanResult> scanResults = wifiManager.getScanResults();
+
+                if (scanResults == null) {
+                    return;
+                }
+
+                WifiScanArrayAdapter adapter = new WifiScanArrayAdapter(getBaseContext(), scanResults);
+                listView.setAdapter(adapter);
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.wifi_main);
 
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         swStatus = (Switch) findViewById(R.id.swStatus);
@@ -58,30 +82,14 @@ public class MyActivity extends Activity {
         intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
 
-        this.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
+        this.registerReceiver(broadcastReceiver, intentFilter);
+    }
 
-                String action = intent.getAction();
+    @Override
+    protected void onPause() {
+        super.onPause();
 
-                if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
-                    checkWifiStatus();
-
-                    if (isWifiEnabled()) {
-                        scanWifi();
-                    }
-                } if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
-                    List<ScanResult> scanResults = wifiManager.getScanResults();
-
-                    if (scanResults == null) {
-                        return;
-                    }
-
-                    WifiScanArrayAdapter adapter = new WifiScanArrayAdapter(getBaseContext(), scanResults);
-                    listView.setAdapter(adapter);
-                }
-            }
-        }, intentFilter);
+        this.unregisterReceiver(broadcastReceiver);
     }
 
     private void disableWifi() {

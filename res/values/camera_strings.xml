@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="camera_activity_title">Working with camera</string>
+
+    <string name="camera_hello_message">Hello!</string>
+
+</resources>

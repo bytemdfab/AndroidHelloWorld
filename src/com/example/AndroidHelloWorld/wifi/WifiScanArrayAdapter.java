@@ -1,4 +1,4 @@
-package com.example.AndroidHelloWorld;
+package com.example.AndroidHelloWorld.wifi;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,19 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.example.AndroidHelloWorld.R;
 
 import java.util.List;
 
-/**
- * Created by byte on 23.09.2014.
- */
 public class WifiScanArrayAdapter extends ArrayAdapter<ScanResult> {
 
     private final Context context;
     private final List<ScanResult> objects;
 
     public WifiScanArrayAdapter(Context context, List<ScanResult> objects) {
-        super(context, R.layout.my_list_item, objects);
+        super(context, R.layout.wifi_list_item, objects);
         this.context = context;
         this.objects = objects;
     }
@@ -38,7 +36,7 @@ public class WifiScanArrayAdapter extends ArrayAdapter<ScanResult> {
         View itemView = convertView;
         if (itemView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            itemView = inflater.inflate(R.layout.my_list_item, parent, false);
+            itemView = inflater.inflate(R.layout.wifi_list_item, parent, false);
 
             holder = new ViewHolder();
             holder.txtSSID = (TextView) itemView.findViewById(R.id.txtSSID);
