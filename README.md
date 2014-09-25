@@ -10,4 +10,4 @@ Features:
 * Camera usage:
  * Can get photos via system app Camera
 * Camera view:
- * Can get stream from camera directly into self form
+ * Can get stream from camera
