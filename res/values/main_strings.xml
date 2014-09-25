@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Set of samples</string>
+
+    <string name="menu_about">About</string>
+
+    <string name="about_text">This is the set of simple samples\n
+    written by <b>byte.mdfab</b>\n
+    just for fun(c)Linus.\n
+    Source code can be found on\n https://github.com/bytemdfab/AndroidHelloWorld
+    </string>
+
 </resources>

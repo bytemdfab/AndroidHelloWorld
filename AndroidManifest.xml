@@ -27,5 +27,7 @@
                   android:label="@string/camera_activity_title"/>
         <activity android:name=".cameraView.CameraViewActivity"
                   android:label="@string/camera_view_activity_title"/>
+        <activity android:name=".AboutActivity"
+                  android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"/>
     </application>
 </manifest>
